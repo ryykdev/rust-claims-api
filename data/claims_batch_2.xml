@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export model="insurance.claim" generated_at="2026-07-28 02:14:27" source="insurer_feed">
+  <record>
+    <field name="external_id">778120</field>
+    <field name="type">THEFT</field>
+    <field name="state">reguliert</field>
+    <field name="sale_order_number">KAU-003945</field>
+    <field name="incident_date">2026-03-23</field>
+    <field name="reported_date">2026-03-25</field>
+    <field name="repair_cost">False</field>
+    <field name="police_report_no">BE-2026-193482</field>
+    <field name="description">Fahrrad aus Tiefgarage entwendet, Schloss aufgebrochen</field>
+  </record>
+  <record>
+    <field name="external_id">780110</field>
+    <field name="type">PARTIAL_DAMAGE</field>
+    <field name="state">Unterlagen angefordert</field>
+    <field name="sale_order_number">KAU-003945</field>
+    <field name="incident_date">2026-04-02</field>
+    <field name="reported_date">2026-04-04</field>
+    <field name="repair_cost">412,50</field>
+    <field name="police_report_no">False</field>
+    <field name="description">Sturz auf Radweg, Schaltwerk und Laufrad beschädigt</field>
+  </record>
+  <record>
+    <field name="external_id">780450</field>
+    <field name="type">PARTIAL_DAMAGE</field>
+    <field name="state">Schaden gemeldet / prüfen</field>
+    <field name="sale_order_number">KAU-004712</field>
+    <field name="incident_date">2026-02-17</field>
+    <field name="reported_date">2026-02-18</field>
+    <field name="repair_cost">61,00</field>
+    <field name="police_report_no">False</field>
+    <field name="description">Kratzer am Rahmen nach Umfaller, Nachkalkulation Werkstatt</field>
+  </record>
+  <record>
+    <field name="external_id">787000</field>
+    <field name="type">PARTIAL_DAMAGE</field>
+    <field name="state">Schaden gemeldet / prüfen</field>
+    <field name="sale_order_number">KAU-004712</field>
+    <field name="incident_date">2026-06-28</field>
+    <field name="reported_date">2026-06-30</field>
+    <field name="repair_cost">540,00</field>
+    <field name="police_report_no">False</field>
+    <field name="description">Hinterbau beschädigt nach Auffahrunfall</field>
+  </record>
+  <record>
+    <field name="external_id">787030</field>
+    <field name="type">THEFT</field>
+    <field name="state">Schaden gemeldet / prüfen</field>
+    <field name="sale_order_number">KAU-004712</field>
+    <field name="incident_date">2026-07-02</field>
+    <field name="reported_date">2026-07-03</field>
+    <field name="repair_cost">False</field>
+    <field name="police_report_no">WOB-2026-55102</field>
+    <field name="description">Diebstahl trotz Anschließens, Bügelschloss durchtrennt</field>
+  </record>
+</export>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<export model="lr.contract.leasing" generated_at="2026-07-27 02:14:09" source="erp">
+  <record>
+    <field name="name">ELV-100234</field>
+    <field name="sale_order_number">KAU-003945</field>
+    <field name="partner_id">[2841, 'Anna Müller']</field>
+    <field name="customer_company_id">[512, 'Backwaren Groß GmbH']</field>
+    <field name="frame_number">WBL120344</field>
+    <field name="brand">Cube</field>
+    <field name="model">Kathmandu Hybrid Pro 750</field>
+    <field name="category">3499.00</field>
+    <field name="net_value">2024-09-01</field>
+    <field name="start_leasing">2027-08-31</field>
+    <field name="end_leasing">36</field>
+    <field name="term">4.53</field>
+    <field name="insurance_rate">active</field>
+  </record>
+  <record>
+    <field name="name">ELV-100301</field>
+    <field name="sale_order_number">KAU-004102</field>
+    <field name="partner_id">[2933, 'Jonas Weiß']</field>
+    <field name="customer_company_id">[77, 'Straßenbau Süd AG']</field>
+    <field name="frame_number">CAN99801</field>
+    <field name="brand">Canyon</field>
+    <field name="model">Pathlite:ON 7</field>
+    <field name="category">2199.00</field>
+    <field name="net_value">2025-01-01</field>
+    <field name="start_leasing">2028-12-31</field>
+    <field name="end_leasing">48</field>
+    <field name="term">4.20</field>
+    <field name="insurance_rate">active</field>
+  </record>
+  <record>
+    <field name="name">ELV-100377</field>
+    <field name="sale_order_number">KAU-004311</field>
+    <field name="partner_id">[3001, 'René Böhm']</field>
+    <field name="customer_company_id">[214, 'Kanzlei Böttcher &amp; Partner']</field>
+    <field name="frame_number">SPZ44120</field>
+    <field name="brand">Specialized</field>
+    <field name="model">Turbo Vado 4.0</field>
+    <field name="category">4650.00</field>
+    <field name="net_value">2023-05-01</field>
+    <field name="start_leasing">2026-04-30</field>
+    <field name="end_leasing">36</field>
+    <field name="term">5.80</field>
+    <field name="insurance_rate">done</field>
+  </record>
+  <record>
+    <field name="name">ELV-100412</field>
+    <field name="sale_order_number">KAU-004489</field>
+    <field name="partner_id">[3120, 'Sofia Marquardt']</field>
+    <field name="customer_company_id">[88, 'Nordlicht Logistik GmbH']</field>
+    <field name="frame_number">GAZ77210</field>
+    <field name="brand">Gazelle</field>
+    <field name="model">Ultimate C380</field>
+    <field name="category">3100.00</field>
+    <field name="net_value">2025-03-01</field>
+    <field name="start_leasing">False</field>
+    <field name="end_leasing">36</field>
+    <field name="term">4.34</field>
+    <field name="insurance_rate">active</field>
+  </record>
+  <record>
+    <field name="name">ELV-100455</field>
+    <field name="sale_order_number">KAU-004521</field>
+    <field name="partner_id">[3188, 'Tobias Krüger']</field>
+    <field name="customer_company_id">[301, 'Möbelhaus Schäfer KG']</field>
+    <field name="frame_number">TRK55901</field>
+    <field name="brand">Trek</field>
+    <field name="model">FX+ 2</field>
+    <field name="category">2749.00</field>
+    <field name="net_value">2024-06-01</field>
+    <field name="start_leasing">2027-05-31</field>
+    <field name="end_leasing">36</field>
+    <field name="term">4.20</field>
+    <field name="insurance_rate">cancel</field>
+  </record>
+  <record>
+    <field name="name">ELV-100489</field>
+    <field name="sale_order_number">KAU-004601</field>
+    <field name="partner_id">[3250, 'Leonie Hoffmann']</field>
+    <field name="customer_company_id">[512, 'Backwaren Groß GmbH']</field>
+    <field name="frame_number">TRK80112</field>
+    <field name="brand">Trek</field>
+    <field name="model">Powerfly 5</field>
+    <field name="category">5200.00</field>
+    <field name="net_value">2025-07-01</field>
+    <field name="start_leasing">2028-06-30</field>
+    <field name="end_leasing">36</field>
+    <field name="term">6.10</field>
+    <field name="insurance_rate">active</field>
+  </record>
+  <record>
+    <field name="name">ELV-100502</field>
+    <field name="sale_order_number">KAU-004666</field>
+    <field name="partner_id">[3311, 'Émile Laurent']</field>
+    <field name="customer_company_id">[402, 'Druckerei Vogel GmbH']</field>
+    <field name="frame_number">RSM33417</field>
+    <field name="brand">Riese &amp; Müller</field>
+    <field name="model">Charger4 GT</field>
+    <field name="category">7350.00</field>
+    <field name="net_value">2026-01-01</field>
+    <field name="start_leasing">2028-12-31</field>
+    <field name="end_leasing">36</field>
+    <field name="term">7.94</field>
+    <field name="insurance_rate">active</field>
+  </record>
+  <record>
+    <field name="name">ELV-100533</field>
+    <field name="sale_order_number">KAU-004712</field>
+    <field name="partner_id">[3377, 'Katharina Groß']</field>
+    <field name="customer_company_id">[77, 'Straßenbau Süd AG']</field>
+    <field name="frame_number">CUB10229</field>
+    <field name="brand">Cube</field>
+    <field name="model">Reaction Hybrid Performance</field>
+    <field name="category">1899.00</field>
+    <field name="net_value">2025-10-01</field>
+    <field name="start_leasing">2028-09-30</field>
+    <field name="end_leasing">36</field>
+    <field name="term">4.20</field>
+    <field name="insurance_rate">active</field>
+  </record>
+</export>

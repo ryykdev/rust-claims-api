@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# JVM
+build/
+target/
+.gradle/
+*.class
+
+# keep the gradle wrapper if you add one
+!gradle/wrapper/gradle-wrapper.jar
+
+# Node (optional frontend)
+node_modules/
+dist/
+
+# Env & IDE
+.env
+.idea/
+.vscode/
+.DS_Store

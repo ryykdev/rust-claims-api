@@ -1,0 +1,27 @@
+# Demo requests: keep this file up to date with your actual API.
+# Works with the VS Code "REST Client" extension or IntelliJ's HTTP client.
+# Alternatively, replace it with a curl script; anything we can replay quickly.
+
+# Adjust if you changed the port mapping in docker-compose.yml.
+@host = http://localhost:8000
+
+### Health / smoke
+GET {{host}}/
+
+### Trigger ingestion (adjust to your design: endpoint, CLI, …)
+# POST {{host}}/ingest
+
+### List contracts
+GET {{host}}/contracts
+
+### Contract detail incl. claims
+GET {{host}}/contracts/ELV-100234
+
+### List claims
+GET {{host}}/claims
+
+### Decide the sanity-anchor claim (expected: APPROVED, payout 1652.31)
+POST {{host}}/claims/778120/decision
+
+### Deciding again returns the same decision (idempotent)
+POST {{host}}/claims/778120/decision
