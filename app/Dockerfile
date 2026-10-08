@@ -12,5 +12,24 @@
 #
 # The placeholder below only exists so `docker compose up` works out of the box.
 
-FROM alpine:3.20
-CMD ["sh", "-c", "echo 'app placeholder: replace app/Dockerfile with your service (see README.md)'; sleep 2147483647"]
+  # --- build ---
+  FROM rust:1.94-bookworm AS build
+  WORKDIR /app
+  # Cache dependencies: copy manifests first, build a dummy lib/bin, then real sources
+  COPY Cargo.toml Cargo.lock ./
+  RUN mkdir src && echo "fn main() {}" > src/main.rs \
+      && cargo build --release \
+      && rm -rf src
+  COPY src ./src
+  COPY migrations ./migrations
+  RUN touch src/main.rs && cargo build --release
+  # --- runtime ---
+  FROM debian:bookworm-slim
+  RUN apt-get update \
+      && apt-get install -y --no-install-recommends ca-certificates \
+      && rm -rf /var/lib/apt/lists/*
+  WORKDIR /app
+  COPY --from=build /app/target/release/rust-claims-api /usr/local/bin/rust-claims-api
+  EXPOSE 8000
+  ENV RUST_LOG=info
+  CMD ["rust-claims-api"]
