@@ -29,15 +29,15 @@ pub enum ClaimType {
 
 #[derive(Debug, PartialEq, EnumString)]
 pub enum ClaimState {
-    #[strum(to_string = "Schaden gemeldet / prüfen")]
+    #[strum(serialize = "Schaden gemeldet / prüfen")]
     Investigation,
-    #[strum(to_string = "Unterlagen angefordert")]
+    #[strum(serialize = "Unterlagen angefordert")]
     AwaitingDocuments,
-    #[strum(to_string = "reguliert", serialize = "bezahlt")]
+    #[strum(serialize = "reguliert", serialize = "bezahlt")]
     Settled,
-    #[strum(to_string = "abgelehnt")]
+    #[strum(serialize = "abgelehnt")]
     NotSettled,
-    #[strum(to_string = "gegenstandslos")]
+    #[strum(serialize = "gegenstandslos")]
     Invalid,
     Unknown,
 }
