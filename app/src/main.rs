@@ -1,3 +1,5 @@
+mod db;
+mod ingestion;
 mod model;
 
 use actix_web::{App, HttpServer, Responder, get, web};

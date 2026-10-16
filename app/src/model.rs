@@ -1,9 +1,10 @@
 use std::time::SystemTime;
+use strum_macros::EnumString;
 
 use chrono::NaiveDate;
 use rust_decimal::Decimal;
 
-#[derive(sqlx::FromRow)]
+#[derive(sqlx::FromRow, Debug)]
 pub struct Claim {
     pub external_id: i64,
     pub claim_type: ClaimType,
@@ -11,11 +12,13 @@ pub struct Claim {
     pub sale_order_number: String,        // foreign key from contract
     pub incident_date: Option<NaiveDate>, // claim requires an incident date
     pub reported_date: Option<NaiveDate>,
-    pub repair_cost: Decimal,
-    pub police_report: Option<String>,
-    pub description: Option<String>,
+    pub repair_cost: Option<Decimal>,
+    pub police_report_no: Option<String>,
+    pub description: String,
 }
 
+#[derive(Debug, PartialEq, EnumString)]
+#[strum(serialize_all = "SCREAMING_SNAKE_CASE")]
 pub enum ClaimType {
     Theft,
     PartialDamage,
@@ -24,39 +27,49 @@ pub enum ClaimType {
     Unknown,
 }
 
+#[derive(Debug, PartialEq, EnumString)]
 pub enum ClaimState {
+    #[strum(to_string = "Schaden gemeldet / prüfen")]
     Investigation,
+    #[strum(to_string = "Unterlagen angefordert")]
     AwaitingDocuments,
+    #[strum(to_string = "reguliert", serialize = "bezahlt")]
     Settled,
+    #[strum(to_string = "abgelehnt")]
     NotSettled,
+    #[strum(to_string = "gegenstandslos")]
     Invalid,
     Unknown,
 }
 
-#[derive(sqlx::FromRow)]
+#[derive(sqlx::FromRow, Debug)]
 pub struct Contract {
     //
     pub name: String,
     pub sale_order_number: String,
-    pub partner_id: i64,
+    pub partner_id: i32,
     pub partner_name: String,
-    pub customer_company_id: i64,
-    pub customer_company_name: String,
-    pub frame_number: i64,
+    pub company_id: i32,
+    pub company_name: String,
+    pub frame_number: String,
     pub brand: String,
     pub model: String,
     pub net_value: Decimal,
     pub start_leasing: NaiveDate,
-    pub end_leasing: NaiveDate,
-    pub term: i64,
+    pub end_leasing: Option<NaiveDate>,
+    pub term: u8,
     pub insurance_rate: Decimal,
     pub contract_status: ContractStatus,
 }
 
+#[derive(Debug, PartialEq, EnumString)]
 pub enum ContractStatus {
+    #[strum(ascii_case_insensitive)]
     Active,
+    #[strum(ascii_case_insensitive)]
     Done,
-    Canceled,
+    #[strum(ascii_case_insensitive)]
+    Cancel,
     Unknown,
 }
 
