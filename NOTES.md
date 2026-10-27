@@ -1,10 +1,18 @@
 # NOTES
 
-> Fill this in as you go; it is part of the deliverables.
-
 ## How to run & demo
 
 <!-- Exact commands: how to ingest, how to decide claims, how to run tests. -->
+
+### run
+```bash
+docker compose up --build
+```
+### ingest using POST /ingest
+```bash
+curl
+```
+
 
 ## Design decisions
 

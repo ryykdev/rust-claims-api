@@ -1,18 +1,19 @@
 mod db;
-mod ingestion;
+mod error;
+mod ingest;
 mod model;
+mod routes;
 
-use actix_web::{App, HttpServer, Responder, get, web};
+use routes::{greet, ingest_data};
+
+use actix_web::{App, HttpServer, web};
 use sqlx::postgres::PgPoolOptions;
 
-#[get("/hello/{name}")]
-async fn greet(name: web::Path<String>) -> impl Responder {
-    format!("Hello {name}!")
-}
-
-#[actix_web::main] // or #[tokio::main]
+#[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    //
+    env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
+    log::info!("starting HTTP server at http://localhost:8000");
+
     let db_url = std::env::var("DATABASE_URL").expect("db url in env");
     let pool = PgPoolOptions::new()
         .max_connections(5)
@@ -22,8 +23,13 @@ async fn main() -> std::io::Result<()> {
 
     sqlx::migrate!("./migrations").run(&pool).await.unwrap();
 
-    HttpServer::new(|| App::new().service(greet))
-        .bind(("0.0.0.0", 8000))?
-        .run()
-        .await
+    HttpServer::new(move || {
+        App::new()
+            .app_data(web::Data::new(pool.clone()))
+            .service(greet)
+            .service(ingest_data)
+    })
+    .bind(("0.0.0.0", 8000))?
+    .run()
+    .await
 }

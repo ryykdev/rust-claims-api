@@ -1,0 +1,40 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n    INSERT INTO contracts (\n    name,\n    sale_order_number,\n    partner_id,\n    partner_name,\n    company_id,\n    company_name,\n    frame_number,\n    brand,\n    model,\n    net_value,\n    start_leasing,\n    end_leasing,\n    term,\n    insurance_rate,\n    contract_status\n    )\n\n    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Varchar",
+        "Varchar",
+        "Int4",
+        "Varchar",
+        "Int4",
+        "Varchar",
+        "Varchar",
+        "Varchar",
+        "Varchar",
+        "Numeric",
+        "Date",
+        "Date",
+        "Int4",
+        "Numeric",
+        {
+          "Custom": {
+            "name": "contract_status",
+            "kind": {
+              "Enum": [
+                "Active",
+                "Done",
+                "Cancel",
+                "Unknown"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "5b53ea5e0ec0acf6f705303405ce4808e4facfc3f50dbaf6083d307c08c8c620"
+}

@@ -22,6 +22,9 @@
       && rm -rf src
   COPY src ./src
   COPY migrations ./migrations
+  COPY data ./data
+  COPY .sqlx ./.sqlx
+  ENV SQLX_OFFLINE=true
   RUN touch src/main.rs && cargo build --release
   # --- runtime ---
   FROM debian:bookworm-slim

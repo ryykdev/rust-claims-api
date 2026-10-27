@@ -10,6 +10,9 @@ GET {{host}}/
 
 ### Trigger ingestion (adjust to your design: endpoint, CLI, …)
 # POST {{host}}/ingest
+```bash
+CURL -X POST http://localhost:8000/ingest
+```
 
 ### List contracts
 GET {{host}}/contracts

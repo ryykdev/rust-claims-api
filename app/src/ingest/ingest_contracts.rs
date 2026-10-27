@@ -1,19 +1,30 @@
+use crate::error::CustomError;
 use crate::model::Contract;
 use crate::model::ContractStatus;
 use chrono::NaiveDate;
 use quick_xml::de::from_str;
 use rust_decimal::Decimal;
 use serde::Deserialize;
+use sqlx::PgPool;
 
-pub fn ingest_contracts() {
-    let path = "../data/contracts_export.xml";
+pub async fn ingest_contracts(db: &PgPool) -> Result<(), CustomError> {
+    let path = "/data/contracts_export.xml";
     let bytes = std::fs::read(path).expect("contracts xml file");
     let xml = contracts_from_iso_bytes_to_utf8(&bytes);
-    let contracts = parse_contracts_xml(&xml);
-    crate::db::repo::save_contracts(contracts);
+    let contracts = parse_contracts_xml(&xml).await.map_err(|e| {
+        log::warn!("parse_contracts_xml() failed with {e}");
+        CustomError::IngestFail
+    })?;
+    crate::db::db::save_contracts(db, contracts)
+        .await
+        .map_err(|e| {
+            log::warn!("parse_contracts_xml() failed with {e}");
+            CustomError::IngestFail
+        })?;
+    Ok(())
 }
 
-fn parse_contracts_xml(xml: &str) -> Vec<Contract> {
+async fn parse_contracts_xml(xml: &str) -> Result<Vec<Contract>, CustomError> {
     //
     let export: Export = from_str(xml).unwrap();
 
@@ -81,8 +92,7 @@ fn parse_contracts_xml(xml: &str) -> Vec<Contract> {
         };
         contracts.push(contract);
     }
-    dbg!(&contracts);
-    contracts
+    Ok(contracts)
 }
 
 fn contracts_from_iso_bytes_to_utf8(bytes: &[u8]) -> String {
@@ -155,9 +165,9 @@ enum FieldName {
 #[cfg(test)]
 mod test {
 
-    #[test]
-    fn test_parse_contracts_xml() {
-        use crate::ingestion::ingest_contracts::parse_contracts_xml;
+    #[tokio::test]
+    async fn test_parse_contracts_xml() {
+        use crate::ingest::ingest_contracts::parse_contracts_xml;
         //
         let xml = r#"
         <?xml version="1.0" encoding="ISO-8859-1"?>
@@ -285,15 +295,8 @@ mod test {
 </export>
         "#;
 
-        let contracts = parse_contracts_xml(xml);
+        let contracts = parse_contracts_xml(xml).await.unwrap();
 
-        dbg!(contracts);
-    }
-
-    #[test]
-    fn test_ingest_contracts() {
-        use crate::ingestion::ingest_contracts::ingest_contracts;
-
-        ingest_contracts();
+        assert!(!contracts.is_empty());
     }
 }
