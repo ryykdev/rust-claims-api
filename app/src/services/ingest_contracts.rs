@@ -166,7 +166,7 @@ mod test {
 
     #[tokio::test]
     async fn test_parse_contracts_xml() {
-        use crate::ingest::ingest_contracts::parse_contracts_xml;
+        use crate::services::ingest_contracts::parse_contracts_xml;
         //
         let xml = r#"
         <?xml version="1.0" encoding="ISO-8859-1"?>

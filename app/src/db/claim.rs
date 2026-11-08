@@ -82,3 +82,31 @@ pub(crate) async fn get_claim_by_external_id(
 
     Ok(claim)
 }
+
+pub(crate) async fn get_associated_claims_for_sale_order_number(
+    db: &PgPool,
+    sale_order_number: &str,
+) -> Result<Vec<Claim>, Box<dyn Error>> {
+    //
+    let claims: Vec<Claim> = sqlx::query_as!(
+        Claim,
+        r#"
+    SELECT
+    external_id,
+    claim_type AS "claim_type!: ClaimType",
+    claim_state AS "claim_state!: ClaimState",
+    sale_order_number,
+    incident_date, 
+    reported_date,
+    repair_cost,
+    police_report_no,
+    description
+    FROM claims WHERE sale_order_number = $1
+        "#,
+        sale_order_number
+    )
+    .fetch_all(db)
+    .await?;
+
+    Ok(claims)
+}

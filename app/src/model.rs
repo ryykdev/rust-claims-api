@@ -60,6 +60,19 @@ impl From<String> for ClaimState {
     }
 }
 
+impl Claim {
+    pub fn is_decidable(&self) -> bool {
+        match self.claim_state {
+            ClaimState::Investigation => true,
+            ClaimState::AwaitingDocuments => true,
+            ClaimState::Settled => false,
+            ClaimState::NotSettled => false,
+            ClaimState::Invalid => false,
+            ClaimState::Unknown => false,
+        }
+    }
+}
+
 #[derive(sqlx::FromRow, Debug)]
 pub struct Contract {
     pub name: String,

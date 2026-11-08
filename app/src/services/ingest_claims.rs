@@ -151,7 +151,7 @@ mod test {
 
     #[test]
     fn test_decimal_from_str_valid_euros_decimal_ok() {
-        use crate::ingest::ingest_claims::decimal_from_str;
+        use crate::services::ingest_claims::decimal_from_str;
         use rust_decimal::prelude::*;
 
         let text = "1.234,56";
@@ -162,8 +162,8 @@ mod test {
     }
 
     #[test]
-    fn test_decimal_from_str_False_is_none_ok() {
-        use crate::ingest::ingest_claims::decimal_from_str;
+    fn test_decimal_from_str_false_is_none_ok() {
+        use crate::services::ingest_claims::decimal_from_str;
 
         let text = "False";
 
@@ -174,7 +174,7 @@ mod test {
 
     #[test]
     fn test_decimal_from_str_invalid_euros_is_none_ok() {
-        use crate::ingest::ingest_claims::decimal_from_str;
+        use crate::services::ingest_claims::decimal_from_str;
 
         let text = "1.b3354,60";
 
@@ -185,7 +185,7 @@ mod test {
 
     #[test]
     fn test_parse_claims_xml() {
-        use crate::ingest::ingest_claims::parse_claims_xml;
+        use crate::services::ingest_claims::parse_claims_xml;
         //
         let xml = r#"
 <?xml version="1.0" encoding="UTF-8"?>
@@ -424,8 +424,7 @@ mod test {
 </export>
         "#;
 
-        let claims = parse_claims_xml(xml);
-
-        dbg!(claims);
+        let claims = parse_claims_xml(xml).unwrap();
+        assert!(!claims.is_empty());
     }
 }
