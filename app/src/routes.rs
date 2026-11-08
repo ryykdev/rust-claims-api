@@ -17,14 +17,14 @@ async fn greet(name: web::Path<String>) -> impl Responder {
 #[post("/ingest")]
 async fn ingest_data(db: web::Data<PgPool>) -> Result<HttpResponse, UserError> {
     // contracts first (foreign-key associations)
-    use crate::ingest::ingest_contracts::ingest_contracts;
+    use crate::handlers::ingest_contracts::ingest_contracts;
     ingest_contracts(&db).await.map_err(|e| {
         //
         log::warn!("ingest_data() failed with: {e}");
         UserError::InternalError
     })?;
     // claims
-    use crate::ingest::ingest_claims::ingest_claims;
+    use crate::handlers::ingest_claims::ingest_claims;
     ingest_claims(&db).await.map_err(|e| {
         log::warn!("ingest_claims() failed with: {e}");
         UserError::InternalError
@@ -40,7 +40,7 @@ async fn post_decide_claim(
     external_id: web::Path<u32>,
 ) -> Result<HttpResponse, UserError> {
     log::warn!("started dicision process");
-    let decision = crate::decide::decide_claim(&db, *external_id as i64).await?;
+    let decision = crate::handlers::decide::decide_claim(&db, *external_id as i64).await?;
     crate::db::decision::save_decision(&db, decision)
         .await
         .map_err(|e| {

@@ -1,7 +1,6 @@
 mod db;
-mod decide;
 mod error;
-mod ingest;
+mod handlers;
 mod model;
 mod routes;
 
