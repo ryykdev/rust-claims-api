@@ -1,8 +1,8 @@
 mod db;
 mod error;
-mod handlers;
 mod model;
 mod routes;
+mod services;
 
 use routes::{greet, ingest_data, post_decide_claim};
 
