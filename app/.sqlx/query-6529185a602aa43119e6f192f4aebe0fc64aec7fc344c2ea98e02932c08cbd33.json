@@ -1,0 +1,53 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n    INSERT INTO decisions (\n        id,\n        timestamp,\n        decision_status,\n        payout,\n        decision_reason\n    )\n\n    VALUES ($1, $2, $3, $4, $5)\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int8",
+        "Timestamptz",
+        {
+          "Custom": {
+            "name": "decision_status",
+            "kind": {
+              "Enum": [
+                "Approved",
+                "Rejected",
+                "ManualReview",
+                "Unknown"
+              ]
+            }
+          }
+        },
+        "Numeric",
+        {
+          "Custom": {
+            "name": "decision_reason",
+            "kind": {
+              "Enum": [
+                "ContractNotActive",
+                "OrphanClaim",
+                "PreconditionsNotMet",
+                "ImplausibleDate",
+                "IncidentOutsideLease",
+                "ClaimStateFinal",
+                "MissingPoliceReport",
+                "NotFullyContainedMonths",
+                "RepairCostInsideDeductible",
+                "MissingRepairCost",
+                "PaymentDefault",
+                "UnknownClaimType",
+                "MultipleContractEndingClaims",
+                "AfterContractEndingClaim",
+                "Unknown"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "6529185a602aa43119e6f192f4aebe0fc64aec7fc344c2ea98e02932c08cbd33"
+}

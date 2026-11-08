@@ -1,7 +1,6 @@
 use std::fs;
 
-use crate::db::db::save_claims;
-use crate::error::CustomError;
+use crate::db::claim::save_claims;
 use crate::model::{Claim, ClaimState, ClaimType};
 use quick_xml::de::from_str;
 use serde::Deserialize;
@@ -9,7 +8,7 @@ use sqlx::PgPool;
 
 use rust_decimal::prelude::*;
 
-pub async fn ingest_claims(pool: &PgPool) -> Result<(), CustomError> {
+pub async fn ingest_claims(pool: &PgPool) -> Result<(), Box<dyn std::error::Error>> {
     let path = "/data";
     if let Ok(entries) = fs::read_dir(path) {
         for entry in entries.flatten() {
@@ -18,15 +17,15 @@ pub async fn ingest_claims(pool: &PgPool) -> Result<(), CustomError> {
             {
                 let xml = std::fs::read_to_string(entry.path()).map_err(|e| {
                     log::warn!("fs::read_to_string() failed with: {e}");
-                    CustomError::IngestFail
+                    e
                 })?;
                 let claims = parse_claims_xml(&xml).map_err(|e| {
                     log::warn!("parse_claims_xml() failed with {e}");
-                    CustomError::IngestFail
+                    e
                 })?;
                 save_claims(pool, claims).await.map_err(|e| {
                     log::warn!("ingest_claims:save_claims() error {e}");
-                    CustomError::IngestFail
+                    e
                 })?;
             }
         }

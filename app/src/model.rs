@@ -1,5 +1,6 @@
+use chrono::DateTime;
+use chrono::Utc;
 use std::str::FromStr;
-use std::time::SystemTime;
 use strum_macros::EnumString;
 
 use chrono::NaiveDate;
@@ -13,7 +14,7 @@ pub struct Claim {
     pub claim_type: ClaimType,
     pub claim_state: ClaimState,
     pub sale_order_number: String, // foreign key from contract - orphan claims possible
-    pub incident_date: Option<NaiveDate>, // claim requires an incident date
+    pub incident_date: Option<NaiveDate>, // PaymentDefault has missing incident date
     pub reported_date: Option<NaiveDate>,
     pub repair_cost: Option<Decimal>,
     pub police_report_no: Option<String>,
@@ -59,10 +60,10 @@ impl From<String> for ClaimState {
     }
 }
 
-#[derive(sqlx::FromRow, Debug, Type)]
+#[derive(sqlx::FromRow, Debug)]
 pub struct Contract {
     pub name: String,
-    pub sale_order_number: String, //
+    pub sale_order_number: String,
     pub partner_id: i32,
     pub partner_name: String,
     pub company_id: i32,
@@ -71,7 +72,7 @@ pub struct Contract {
     pub brand: String,
     pub model: String,
     pub net_value: Decimal,
-    pub start_leasing: NaiveDate,
+    pub start_leasing: Option<NaiveDate>,
     pub end_leasing: Option<NaiveDate>,
     pub term: i32,
     pub insurance_rate: Decimal,
@@ -98,14 +99,15 @@ impl From<String> for ContractStatus {
 
 #[derive(sqlx::FromRow)]
 pub struct Decision {
-    pub claim: i64, // claim.external_id
-    pub timestamp: SystemTime,
+    pub id: i64, // claim.external_id
+    pub timestamp: DateTime<Utc>,
     pub decision_status: DecisionStatus,
-    pub payout: Decimal,
+    pub payout: Option<Decimal>,
     pub decision_reason: DecisionReason,
 }
 
 #[derive(Debug, PartialEq, EnumString, Type)]
+#[sqlx(type_name = "decision_status", rename_all = "PascalCase")]
 pub enum DecisionStatus {
     Approved,
     Rejected,
@@ -120,7 +122,9 @@ impl From<String> for DecisionStatus {
 }
 
 #[derive(Debug, PartialEq, EnumString, Type)]
+#[sqlx(type_name = "decision_reason", rename_all = "PascalCase")]
 pub enum DecisionReason {
+    PreconditionsNotMet,
     ContractNotActive,
     OrphanClaim,
     ImplausibleDate,

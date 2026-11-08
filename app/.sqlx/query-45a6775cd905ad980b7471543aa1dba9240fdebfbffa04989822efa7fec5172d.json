@@ -1,0 +1,208 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n    SELECT \n    name,\n    sale_order_number,\n    partner_id,\n    partner_name,\n    company_id,\n    company_name,\n    frame_number,\n    brand,\n    model,\n    net_value,\n    start_leasing,\n    end_leasing,\n    term,\n    insurance_rate,\n    contract_status as \"contract_status!: ContractStatus\"\n    FROM contracts WHERE sale_order_number = $1\n    ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "name",
+        "type_info": "Varchar",
+        "origin": {
+          "Table": {
+            "table": "contracts",
+            "name": "name"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "sale_order_number",
+        "type_info": "Varchar",
+        "origin": {
+          "Table": {
+            "table": "contracts",
+            "name": "sale_order_number"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "partner_id",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "contracts",
+            "name": "partner_id"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "partner_name",
+        "type_info": "Varchar",
+        "origin": {
+          "Table": {
+            "table": "contracts",
+            "name": "partner_name"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "company_id",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "contracts",
+            "name": "company_id"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "company_name",
+        "type_info": "Varchar",
+        "origin": {
+          "Table": {
+            "table": "contracts",
+            "name": "company_name"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "frame_number",
+        "type_info": "Varchar",
+        "origin": {
+          "Table": {
+            "table": "contracts",
+            "name": "frame_number"
+          }
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "brand",
+        "type_info": "Varchar",
+        "origin": {
+          "Table": {
+            "table": "contracts",
+            "name": "brand"
+          }
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "model",
+        "type_info": "Varchar",
+        "origin": {
+          "Table": {
+            "table": "contracts",
+            "name": "model"
+          }
+        }
+      },
+      {
+        "ordinal": 9,
+        "name": "net_value",
+        "type_info": "Numeric",
+        "origin": {
+          "Table": {
+            "table": "contracts",
+            "name": "net_value"
+          }
+        }
+      },
+      {
+        "ordinal": 10,
+        "name": "start_leasing",
+        "type_info": "Date",
+        "origin": {
+          "Table": {
+            "table": "contracts",
+            "name": "start_leasing"
+          }
+        }
+      },
+      {
+        "ordinal": 11,
+        "name": "end_leasing",
+        "type_info": "Date",
+        "origin": {
+          "Table": {
+            "table": "contracts",
+            "name": "end_leasing"
+          }
+        }
+      },
+      {
+        "ordinal": 12,
+        "name": "term",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "contracts",
+            "name": "term"
+          }
+        }
+      },
+      {
+        "ordinal": 13,
+        "name": "insurance_rate",
+        "type_info": "Numeric",
+        "origin": {
+          "Table": {
+            "table": "contracts",
+            "name": "insurance_rate"
+          }
+        }
+      },
+      {
+        "ordinal": 14,
+        "name": "contract_status!: ContractStatus",
+        "type_info": {
+          "Custom": {
+            "name": "contract_status",
+            "kind": {
+              "Enum": [
+                "Active",
+                "Done",
+                "Cancel",
+                "Unknown"
+              ]
+            }
+          }
+        },
+        "origin": {
+          "Table": {
+            "table": "contracts",
+            "name": "contract_status"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "45a6775cd905ad980b7471543aa1dba9240fdebfbffa04989822efa7fec5172d"
+}

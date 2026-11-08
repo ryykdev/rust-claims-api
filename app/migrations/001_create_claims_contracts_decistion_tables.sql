@@ -11,20 +11,20 @@ create type contract_status as enum (
 
 
 CREATE TABLE IF NOT EXISTS contracts (
-    name VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) PRIMARY KEY NOT NULL,
     sale_order_number VARCHAR(255) NOT NULL UNIQUE,
-    partner_id INT,
-    partner_name VARCHAR(255),
-    company_id INT,
-    company_name VARCHAR(255),
+    partner_id INT NOT NULL,
+    partner_name VARCHAR(255) NOT NULL,
+    company_id INT NOT NULL,
+    company_name VARCHAR(255) NOT NULL,
     frame_number VARCHAR(255) NOT NULL,
     brand VARCHAR(255) NOT NULL,
     model VARCHAR(255) NOT NULL,
-    net_value NUMERIC(12, 2),
+    net_value NUMERIC(12, 2) NOT NULL,
     start_leasing DATE,
     end_leasing DATE,
-    term INT,
-    insurance_rate NUMERIC(12, 2),
+    term INT NOT NULL,
+    insurance_rate NUMERIC(12, 2) NOT NULL,
     contract_status contract_status NOT NULL
     );
 
@@ -69,6 +69,7 @@ create type decision_status as enum (
 create type decision_reason as enum (
     'ContractNotActive',
     'OrphanClaim',
+    'PreconditionsNotMet',
     'ImplausibleDate',
     'IncidentOutsideLease',
     'ClaimStateFinal',
@@ -85,10 +86,10 @@ create type decision_reason as enum (
 
 CREATE TABLE IF NOT EXISTS decisions (
     id BIGINT PRIMARY KEY,
-    datetime TIMESTAMP NOT NULL,
+    timestamp TIMESTAMPTZ NOT NULL,
     decision_status decision_status NOT NULL,
     decision_reason decision_reason NOT NULL,
-    payout NUMERIC(12,2) NOT NULL,
+    payout NUMERIC(12,2),
     CONSTRAINT fk_decision_claim
     FOREIGN KEY (id)
     REFERENCES claims (external_id)

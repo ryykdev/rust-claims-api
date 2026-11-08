@@ -1,30 +1,29 @@
-use crate::error::CustomError;
+use crate::error::UserError;
 use crate::model::Contract;
 use crate::model::ContractStatus;
-use chrono::NaiveDate;
 use quick_xml::de::from_str;
 use rust_decimal::Decimal;
 use serde::Deserialize;
 use sqlx::PgPool;
 
-pub async fn ingest_contracts(db: &PgPool) -> Result<(), CustomError> {
+pub async fn ingest_contracts(db: &PgPool) -> Result<(), UserError> {
     let path = "/data/contracts_export.xml";
     let bytes = std::fs::read(path).expect("contracts xml file");
     let xml = contracts_from_iso_bytes_to_utf8(&bytes);
     let contracts = parse_contracts_xml(&xml).await.map_err(|e| {
         log::warn!("parse_contracts_xml() failed with {e}");
-        CustomError::IngestFail
+        UserError::InternalError
     })?;
-    crate::db::db::save_contracts(db, contracts)
+    crate::db::contract::save_contracts(db, contracts)
         .await
         .map_err(|e| {
             log::warn!("parse_contracts_xml() failed with {e}");
-            CustomError::IngestFail
+            UserError::InternalError
         })?;
     Ok(())
 }
 
-async fn parse_contracts_xml(xml: &str) -> Result<Vec<Contract>, CustomError> {
+async fn parse_contracts_xml(xml: &str) -> Result<Vec<Contract>, Box<dyn std::error::Error>> {
     //
     let export: Export = from_str(xml).unwrap();
 
@@ -41,7 +40,7 @@ async fn parse_contracts_xml(xml: &str) -> Result<Vec<Contract>, CustomError> {
         let mut brand = String::new();
         let mut model = String::new();
         let mut net_value = Decimal::default();
-        let mut start_leasing = NaiveDate::default();
+        let mut start_leasing = None;
         let mut end_leasing = None;
         let mut insurance_rate = Decimal::default();
         let mut term = 0;
@@ -58,7 +57,7 @@ async fn parse_contracts_xml(xml: &str) -> Result<Vec<Contract>, CustomError> {
                 FieldName::Brand => brand = field.text.to_string(),
                 FieldName::Model => model = field.text.to_string(),
                 FieldName::Category => net_value = field.text.parse().expect("decimal number"),
-                FieldName::NetValue => start_leasing = field.text.parse().expect("start leasing"),
+                FieldName::NetValue => start_leasing = field.text.parse().ok(),
                 FieldName::StartLeasing => end_leasing = field.text.parse().ok(),
                 FieldName::EndLeasing => term = field.text.parse().expect("term integer"),
                 FieldName::Term => {

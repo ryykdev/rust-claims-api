@@ -1,10 +1,11 @@
 mod db;
+mod decide;
 mod error;
 mod ingest;
 mod model;
 mod routes;
 
-use routes::{greet, ingest_data};
+use routes::{greet, ingest_data, post_decide_claim};
 
 use actix_web::{App, HttpServer, web};
 use sqlx::postgres::PgPoolOptions;
@@ -28,6 +29,7 @@ async fn main() -> std::io::Result<()> {
             .app_data(web::Data::new(pool.clone()))
             .service(greet)
             .service(ingest_data)
+            .service(post_decide_claim)
     })
     .bind(("0.0.0.0", 8000))?
     .run()

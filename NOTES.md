@@ -1,5 +1,8 @@
 # NOTES
 
+TODOS: 
+- implment decision endpoint
+
 ## How to run & demo
 
 <!-- Exact commands: how to ingest, how to decide claims, how to run tests. -->
@@ -10,9 +13,12 @@ docker compose up --build
 ```
 ### ingest using POST /ingest
 ```bash
-curl
+curl -X POST localhost:8000/ingest
 ```
-
+### decide claim
+```bash
+curl -X POST localhost:8000/claims/782220/decision
+```
 
 ## Design decisions
 
